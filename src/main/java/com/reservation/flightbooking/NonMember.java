@@ -11,8 +11,7 @@ public class NonMember extends Passenger {
 
     private Integer membershipLength;
 
-    public NonMember(String name, String passportNumber, Integer membershipLength) {
-        super(name, passportNumber);
+    public NonMember(Integer membershipLength) {
         this.membershipLength = membershipLength;
     }
 

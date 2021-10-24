@@ -13,11 +13,6 @@ public abstract class Passenger {
     private String name;
     private String passportNumber;
 
-    public Passenger(String name, String passportNumber) {
-        this.name = name;
-        this.passportNumber = passportNumber;
-    }
-
     public static Integer getAge() {
         return age;
     }
@@ -33,8 +28,15 @@ public abstract class Passenger {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws InvalidHumanNameException {
+        char c;
+        for (int i = 0; i < name.length(); i++) {
+            c = name.charAt(i);
+            if (Character.isDigit(c)){
+                throw new InvalidHumanNameException("The name must only contain letters");
+            }
+            this.name = name;
+        }
     }
 
     public String getPassportNumber() {

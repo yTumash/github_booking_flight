@@ -193,17 +193,45 @@ public class Main {
 
         airline1.displayItineraries(itineraries);
 
-        Passenger p1 = new Member("Kate", "MC5436789", 7);
-        Passenger p2 = new Member("Alex", "MC7365244", 2);
-        Passenger p3 = new NonMember("Peter", "MC5498254", 0);
-        Passenger p4 = new NonMember("Kate", "MC9525679", 0);
-        Passenger p5 = new Member("Lilly", "MC8934651", 4);
-        Passenger p6 = new Member("Mark", "MC9475623", 7);
-        Passenger p7 = new NonMember("John", "MC9036145", 0);
-        Passenger p8 = new NonMember("Victor", "MC3672061", 0);
-        Passenger p9 = new NonMember("Margaret", "MC4893625", 0);
-        Passenger p10 = new Member("Sylvia", "MC7015382", 1);
-        Passenger p11 = new NonMember("Soo", "MC4962859", 0);
+        Passenger p1 = new Member( 7);
+        Passenger p2 = new Member(2);
+        Passenger p3 = new NonMember(0);
+        Passenger p4 = new NonMember(0);
+        Passenger p5 = new Member(4);
+        Passenger p6 = new Member(7);
+        Passenger p7 = new NonMember(0);
+        Passenger p8 = new NonMember(0);
+        Passenger p9 = new NonMember(0);
+        Passenger p10 = new Member( 1);
+        Passenger p11 = new NonMember( 0);
+
+        try {
+            p1.setName("Kate");
+            p2.setName("Alex");
+            p3.setName("Peter");
+            p4.setName("Kate");
+            p5.setName("Lilly");
+            p6.setName("Mark");
+            p7.setName("John");
+            p8.setName("Victor");
+            p9.setName("Margaret");
+            p10.setName("Sylvia");
+            p11.setName("Soo");
+        } catch (InvalidHumanNameException e){
+            LOGGER.debug("The name must only contain letter");
+        }
+
+        p1.setPassportNumber("MC5436789");
+        p2.setPassportNumber("MC7365244");
+        p3.setPassportNumber("MC5498254");
+        p4.setPassportNumber("MC9525679");
+        p5.setPassportNumber("MC8934651");
+        p6.setPassportNumber("MC9475623");
+        p7.setPassportNumber("MC9036145");
+        p8.setPassportNumber("MC3672061");
+        p9.setPassportNumber("MC4893625");
+        p10.setPassportNumber("MC7015382");
+        p11.setPassportNumber("MC4962859");
 
         try {
             p1.setAge(44);

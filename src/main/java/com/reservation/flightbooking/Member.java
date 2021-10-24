@@ -11,8 +11,7 @@ public class Member extends Passenger {
 
     private Integer membershipLength;
 
-    public Member(String name, String passportNumber, Integer membershipLength) {
-        super(name, passportNumber);
+    public Member(Integer membershipLength) {
         this.membershipLength = membershipLength;
     }
 
