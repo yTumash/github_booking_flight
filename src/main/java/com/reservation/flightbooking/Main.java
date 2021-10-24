@@ -10,10 +10,6 @@ import java.util.List;
 
 public class Main {
 
-    static {
-        System.setProperty("log4j.configurationFile", "log4j2.xml");
-    }
-
     public static void main(String[] args) throws InvalidNameException {
 
         final Logger LOGGER = LogManager.getLogger(Main.class);
