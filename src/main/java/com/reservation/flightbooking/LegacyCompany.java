@@ -21,12 +21,12 @@ public class LegacyCompany extends AirlineCompany<Flight<Passenger>>  implements
 
     @Override
     public void allowBaggage() {
-        LOGGER.debug("Our company allows 30 kg of checked in luggage.");
+        LOGGER.debug("Our company allows 30 kg of checked luggage on board the plane.");
     }
 
     @Override
     public void allowCarryOn() {
-        LOGGER.debug("Our company allows 10 kg checked-in carry-on on board the plane.");
+        LOGGER.debug("Our company allows 10 kg checked carry-on on board the plane.");
     }
 
     @Override
