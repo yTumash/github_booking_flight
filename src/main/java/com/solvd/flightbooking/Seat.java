@@ -2,10 +2,19 @@ package com.solvd.flightbooking;
 
 public class Seat {
 
+    public static Type type;
     private String model;
     private Integer height;
     private Integer width;
     private Integer length;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public String getModel() {
         return model;
@@ -46,5 +55,35 @@ public class Seat {
                 "Height:" + getHeight() +
                 "Width: " + getWidth() +
                 "Length: " + getLength();
+    }
+
+    public enum Type {
+        ECONOMY("economy"),
+        PREMIUM_ECONOMY("premium economy"),
+        BUSINESS("business"),
+        FIRST_CLASS("first class");
+
+        private String t;
+
+        Type(String t) {
+            this.t = t;
+        }
+
+        public static Type takeSeat(String t) {
+            for (Type type : Type.values()) {
+                if (type.getT().equals(t)) {
+                    return type;
+                }
+            }
+            return null;
+        }
+
+        public String getT() {
+            return t;
+        }
+
+        public void setT(String t) {
+            this.t = t;
+        }
     }
 }

@@ -10,14 +10,14 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws InvalidNameException {
+    public static <Type> void main(String[] args) throws InvalidNameException {
 
         final Logger LOGGER = LogManager.getLogger(Main.class);
 
-        LegacyCompany airline1 = new LegacyCompany ("Belavia", LocalDate.of(1993, 10, 9));
-        LegacyCompany airline2 = new LegacyCompany ("Turkish Airlines", LocalDate.of(1933, 6, 20));
-        LegacyCompany airline3 = new LegacyCompany ("Emirates Airways", LocalDate.of(1985, 3, 25));
-        List<AirlineCompany<Flight<Passenger>> > airlines = new ArrayList<>();
+        LegacyCompany airline1 = new LegacyCompany("Belavia", LocalDate.of(1993, 10, 9));
+        LegacyCompany airline2 = new LegacyCompany("Turkish Airlines", LocalDate.of(1933, 6, 20));
+        LegacyCompany airline3 = new LegacyCompany("Emirates Airways", LocalDate.of(1985, 3, 25));
+        List<AirlineCompany<Flight<Passenger>>> airlines = new ArrayList<>();
         airlines.add(airline1);
         airlines.add(airline2);
         airlines.add(airline3);
@@ -25,17 +25,22 @@ public class Main {
         airline1.provideService();
         airline1.allowBaggage();
         airline1.allowCarryOn();
-        airline1.serveMeals();
+        airline1.setFood(LegacyCompany.Food.NORMAL);
+
+        LegacyCompany.Food new1 = LegacyCompany.Food.chooseFood("normal");
+        LegacyCompany.Food new2 = LegacyCompany.Food.chooseFood("halal");
+        LegacyCompany.Food new3 = LegacyCompany.Food.chooseFood("vegan");
+        LegacyCompany.Food new4 = LegacyCompany.Food.chooseFood("vegetarian");
 
         airline2.provideService();
         airline2.allowBaggage();
         airline2.allowCarryOn();
-        airline2.serveMeals();
+        airline1.setFood(LegacyCompany.Food.HALAL);
 
         airline3.provideService();
         airline3.allowBaggage();
         airline3.allowCarryOn();
-        airline3.serveMeals();
+        airline3.setFood(LegacyCompany.Food.VEGETARIAN);
 
         System.out.println(airline1.getName().hashCode());
         System.out.println(airline2.getName().hashCode());
@@ -52,9 +57,24 @@ public class Main {
         Seat s9 = new Seat();
         Seat s10 = new Seat();
         Seat s11 = new Seat();
-        Seat s12= new Seat();
+        Seat s12 = new Seat();
         Seat s13 = new Seat();
         Seat s14 = new Seat();
+
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.BUSINESS);
+        s1.setType(Seat.Type.PREMIUM_ECONOMY);
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.FIRST_CLASS);
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.BUSINESS);
+        s1.setType(Seat.Type.FIRST_CLASS);
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.PREMIUM_ECONOMY);
+        s1.setType(Seat.Type.PREMIUM_ECONOMY);
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.ECONOMY);
+        s1.setType(Seat.Type.ECONOMY);
 
         List<Seat> seats1 = new ArrayList<>();
         seats1.add(s1);
@@ -75,10 +95,20 @@ public class Main {
         seats1.add(s13);
         seats1.add(s14);
 
-        Aircraft<Seat> aircraft1 = new Aircraft<>("747", "Boeing", 605);
-        Aircraft<Seat> aircraft2 = new Aircraft<>("767", "Boeing", 375);
-        Aircraft<Seat> aircraft3 = new Aircraft<>("737", "Boeing", 215);
-        Aircraft<Seat> aircraft4 = new Aircraft<>("a380", "Airbus", 853);
+        Seat.Type takenSeat1 = Seat.Type.takeSeat("economy");
+        Seat.Type takenSeat2 = Seat.Type.takeSeat("business");
+        Seat.Type takenSeat3 = Seat.Type.takeSeat("premium economy");
+        Seat.Type takenSeat4 = Seat.Type.takeSeat("first class");
+
+        Aircraft<Seat> aircraft1 = new Aircraft<>("747", 605);
+        Aircraft<Seat> aircraft2 = new Aircraft<>("767", 375);
+        Aircraft<Seat> aircraft3 = new Aircraft<>("737", 215);
+        Aircraft<Seat> aircraft4 = new Aircraft<>("a380", 853);
+
+        aircraft1.setModel(Aircraft.Model.AIRBUS);
+        aircraft1.setModel(Aircraft.Model.AIRBUS);
+        aircraft1.setModel(Aircraft.Model.AIRBUS);
+        aircraft1.setModel(Aircraft.Model.BOING);
 
         aircraft1.setSeats(seats1);
         aircraft2.setSeats(seats2);
@@ -189,7 +219,7 @@ public class Main {
 
         airline1.displayItineraries(itineraries);
 
-        Passenger p1 = new Member( 7);
+        Passenger p1 = new Member(7);
         Passenger p2 = new Member(2);
         Passenger p3 = new NonMember(0);
         Passenger p4 = new NonMember(0);
@@ -198,8 +228,8 @@ public class Main {
         Passenger p7 = new NonMember(0);
         Passenger p8 = new NonMember(0);
         Passenger p9 = new NonMember(0);
-        Passenger p10 = new Member( 1);
-        Passenger p11 = new NonMember( 0);
+        Passenger p10 = new Member(1);
+        Passenger p11 = new NonMember(0);
 
         try {
             p1.setName("Kate");
@@ -213,7 +243,7 @@ public class Main {
             p9.setName("Margaret");
             p10.setName("Sylvia");
             p11.setName("Soo");
-        } catch (InvalidHumanNameException e){
+        } catch (InvalidHumanNameException e) {
             LOGGER.debug("The name must only contain letter");
         }
 
@@ -326,22 +356,167 @@ public class Main {
         airline2.displayFlights(flights2);
         airline3.displayFlights(flights3);
 
-        flight1.setSeatsLeft(aircrafts,10);
+        flight1.setSeatsLeft(aircrafts, 10);
         flight2.setSeatsLeft(aircrafts, 34);
         flight3.setSeatsLeft(aircrafts, 0);
         flight4.setSeatsLeft(aircrafts, 100);
-        flight5.setSeatsLeft(aircrafts,1);
-        flight6.setSeatsLeft(aircrafts,0);
-        flight7.setSeatsLeft(aircrafts,2);
+        flight5.setSeatsLeft(aircrafts, 1);
+        flight6.setSeatsLeft(aircrafts, 0);
+        flight7.setSeatsLeft(aircrafts, 2);
 
         try {
-            flight1.setPrice(100.0d);
-            flight2.setPrice(120.0d);
-            flight3.setPrice(250.0d);
-            flight4.setPrice(300.0d);
-            flight5.setPrice(350.0d);
-            flight6.setPrice(150.0d);
-            flight7.setPrice(350.0d);
+            switch (takenSeat1) {
+                case ECONOMY:
+                    flight1.setPrice(100.0d);
+                    flight2.setPrice(120.0d);
+                    flight3.setPrice(250.0d);
+                    flight4.setPrice(300.0d);
+                    flight5.setPrice(350.0d);
+                    flight6.setPrice(150.0d);
+                    flight7.setPrice(350.0d);
+                    break;
+                case PREMIUM_ECONOMY:
+                    flight1.setPrice(200.0d);
+                    flight2.setPrice(180.0d);
+                    flight3.setPrice(350.0d);
+                    flight4.setPrice(500.0d);
+                    flight5.setPrice(600.0d);
+                    flight6.setPrice(300.0d);
+                    flight7.setPrice(550.0d);
+                    break;
+                case BUSINESS:
+                    flight1.setPrice(900.0d);
+                    flight2.setPrice(1000.0d);
+                    flight3.setPrice(1200.0d);
+                    flight4.setPrice(1000.0d);
+                    flight5.setPrice(1100.0d);
+                    flight6.setPrice(1300.0d);
+                    flight7.setPrice(1550.0d);
+                    break;
+                case FIRST_CLASS:
+                    flight1.setPrice(1900.0d);
+                    flight2.setPrice(2000.0d);
+                    flight3.setPrice(2200.0d);
+                    flight4.setPrice(2000.0d);
+                    flight5.setPrice(2100.0d);
+                    flight6.setPrice(2300.0d);
+                    flight7.setPrice(2550.0d);
+                    break;
+            }
+            switch (takenSeat2) {
+                case ECONOMY:
+                    flight1.setPrice(100.0d);
+                    flight2.setPrice(120.0d);
+                    flight3.setPrice(250.0d);
+                    flight4.setPrice(300.0d);
+                    flight5.setPrice(350.0d);
+                    flight6.setPrice(150.0d);
+                    flight7.setPrice(350.0d);
+                    break;
+                case PREMIUM_ECONOMY:
+                    flight1.setPrice(200.0d);
+                    flight2.setPrice(180.0d);
+                    flight3.setPrice(350.0d);
+                    flight4.setPrice(500.0d);
+                    flight5.setPrice(600.0d);
+                    flight6.setPrice(300.0d);
+                    flight7.setPrice(550.0d);
+                    break;
+                case BUSINESS:
+                    flight1.setPrice(900.0d);
+                    flight2.setPrice(1000.0d);
+                    flight3.setPrice(1200.0d);
+                    flight4.setPrice(1000.0d);
+                    flight5.setPrice(1100.0d);
+                    flight6.setPrice(1300.0d);
+                    flight7.setPrice(1550.0d);
+                    break;
+                case FIRST_CLASS:
+                    flight1.setPrice(1900.0d);
+                    flight2.setPrice(2000.0d);
+                    flight3.setPrice(2200.0d);
+                    flight4.setPrice(2000.0d);
+                    flight5.setPrice(2100.0d);
+                    flight6.setPrice(2300.0d);
+                    flight7.setPrice(2550.0d);
+                    break;
+            }
+            switch (takenSeat3) {
+                case ECONOMY:
+                    flight1.setPrice(100.0d);
+                    flight2.setPrice(120.0d);
+                    flight3.setPrice(250.0d);
+                    flight4.setPrice(300.0d);
+                    flight5.setPrice(350.0d);
+                    flight6.setPrice(150.0d);
+                    flight7.setPrice(350.0d);
+                    break;
+                case PREMIUM_ECONOMY:
+                    flight1.setPrice(200.0d);
+                    flight2.setPrice(180.0d);
+                    flight3.setPrice(350.0d);
+                    flight4.setPrice(500.0d);
+                    flight5.setPrice(600.0d);
+                    flight6.setPrice(300.0d);
+                    flight7.setPrice(550.0d);
+                    break;
+                case BUSINESS:
+                    flight1.setPrice(900.0d);
+                    flight2.setPrice(1000.0d);
+                    flight3.setPrice(1200.0d);
+                    flight4.setPrice(1000.0d);
+                    flight5.setPrice(1100.0d);
+                    flight6.setPrice(1300.0d);
+                    flight7.setPrice(1550.0d);
+                    break;
+                case FIRST_CLASS:
+                    flight1.setPrice(1900.0d);
+                    flight2.setPrice(2000.0d);
+                    flight3.setPrice(2200.0d);
+                    flight4.setPrice(2000.0d);
+                    flight5.setPrice(2100.0d);
+                    flight6.setPrice(2300.0d);
+                    flight7.setPrice(2550.0d);
+                    break;
+            }
+            switch (takenSeat4) {
+                case ECONOMY:
+                    flight1.setPrice(100.0d);
+                    flight2.setPrice(120.0d);
+                    flight3.setPrice(250.0d);
+                    flight4.setPrice(300.0d);
+                    flight5.setPrice(350.0d);
+                    flight6.setPrice(150.0d);
+                    flight7.setPrice(350.0d);
+                    break;
+                case PREMIUM_ECONOMY:
+                    flight1.setPrice(200.0d);
+                    flight2.setPrice(180.0d);
+                    flight3.setPrice(350.0d);
+                    flight4.setPrice(500.0d);
+                    flight5.setPrice(600.0d);
+                    flight6.setPrice(300.0d);
+                    flight7.setPrice(550.0d);
+                    break;
+                case BUSINESS:
+                    flight1.setPrice(900.0d);
+                    flight2.setPrice(1000.0d);
+                    flight3.setPrice(1200.0d);
+                    flight4.setPrice(1000.0d);
+                    flight5.setPrice(1100.0d);
+                    flight6.setPrice(1300.0d);
+                    flight7.setPrice(1550.0d);
+                    break;
+                case FIRST_CLASS:
+                    flight1.setPrice(1900.0d);
+                    flight2.setPrice(2000.0d);
+                    flight3.setPrice(2200.0d);
+                    flight4.setPrice(2000.0d);
+                    flight5.setPrice(2100.0d);
+                    flight6.setPrice(2300.0d);
+                    flight7.setPrice(2550.0d);
+                    break;
+            }
         } catch (InvalidPriceException e) {
             LOGGER.debug("The price has to be positive");
         }
@@ -433,7 +608,8 @@ public class Main {
         t1.printData();
         t2.printData();
         t3.printData();
-        t4.printData();;
+        t4.printData();
+        ;
 
         try (MyResources resources = new MyResources()) {
             LOGGER.debug("The seat is being booked");
@@ -442,7 +618,7 @@ public class Main {
             flight7.bookSeat(71642);
             flight4.bookSeat(98403);
         }
-        
+
         flight1.calculatePrice();
         flight3.calculatePrice();
         flight7.calculatePrice();

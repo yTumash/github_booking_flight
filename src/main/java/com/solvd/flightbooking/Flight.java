@@ -8,7 +8,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
-
 public class Flight<Passenger> implements Flyable, Transferable, Bookable {
 
     private static final Logger LOGGER = LogManager.getLogger(Flight.class);
@@ -97,6 +96,10 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
         return seatsLeft;
     }
 
+    public void setSeatsLeft(Integer seatsLeft) {
+        this.seatsLeft = seatsLeft;
+    }
+
     public void setSeatsLeft(List<Aircraft<Seat>> planes, Integer seatsLeft) {
         for (Aircraft<Seat> a : planes) {
             if (seatsLeft <= a.getCapacity()) {
@@ -134,10 +137,6 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
 
     public void setPassengers(List<Passenger> passengers) {
         this.passengers = passengers;
-    }
-
-    public void setSeatsLeft(Integer seatsLeft) {
-        this.seatsLeft = seatsLeft;
     }
 
     public List<Flight<Passenger>> getFlights() {

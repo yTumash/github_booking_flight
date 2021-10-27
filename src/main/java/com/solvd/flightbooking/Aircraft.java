@@ -11,14 +11,21 @@ public class Aircraft<Seat> {
     private static final Logger LOGGER = LogManager.getLogger(Aircraft.class);
 
     private String id;
-    private String model;
+    private Model model;
     private Integer capacity;
     private List<Seat> seats;
 
-    public Aircraft(String id, String model, Integer capacity) {
+    public Aircraft(String id, Integer capacity) {
         this.id = id;
-        this.model = model;
         this.capacity = capacity;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     public String getId() {
@@ -27,14 +34,6 @@ public class Aircraft<Seat> {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
     }
 
     public Integer getCapacity() {
@@ -78,5 +77,23 @@ public class Aircraft<Seat> {
     @Override
     public int hashCode() {
         return Objects.hash(id, model, capacity, seats);
+    }
+
+    public enum Model {
+        AIRBUS("airbus"), BOING("boing");
+
+        private String name;
+
+        Model(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }
