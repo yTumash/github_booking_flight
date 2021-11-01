@@ -3,10 +3,16 @@ package com.solvd.flightbooking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -121,6 +127,12 @@ public class Main {
         aircrafts.add(aircraft3);
         aircrafts.add(aircraft4);
 
+        aircrafts.stream()
+                        .filter(aircraft -> aircraft.getModel().equals(Aircraft.Model.AIRBUS))
+                        .flatMap(aircraft -> aircraft.getSeats().stream())
+                        .peek(seat -> seat.getType().equals(Seat.Type.ECONOMY))
+                        .findFirst();
+
         aircraft1.printData();
         System.out.println(aircraft1.getId().hashCode());
         System.out.println(aircraft2.getId().hashCode());
@@ -167,6 +179,14 @@ public class Main {
         airports.add(airport6);
         airports.add(airport7);
         airports.add(airport8);
+
+        Optional<Flight<Passenger>> flightsListed = airlines.stream()
+                .filter(airlineCompany -> airlineCompany.getName().contains("B"))
+                .flatMap(airlineCompany -> airlineCompany.getFlights().stream())
+                .filter(flight -> flight.getItinerary().equals("Moscow"))
+                .filter(flight -> flight.getSeatsLeft() > 0 )
+                .peek(flight -> flight.flyFrom(airport1))
+                .findFirst();
 
         airport1.printData();
         airport2.printData();
@@ -555,9 +575,6 @@ public class Main {
         flight6.getCarryOn();
         flight7.getLuggage();
         flight7.getCarryOn();
-
-        flight1.printData();
-        flight2.printData();
         System.out.println(flight1.getFlightNumber().hashCode());
         System.out.println(flight2.getFlightNumber().hashCode());
         System.out.println(flight1.getFlightNumber().equals(flight2.getFlightNumber()));
@@ -580,6 +597,16 @@ public class Main {
         airport5.receivePlane(flight6);
         airport1.sendPlane(flight7);
         airport7.receivePlane(flight7);
+
+        airports.stream()
+                        .flatMap(airport -> airport.getAirlines().stream())
+                        .filter(airlineCompany -> airlineCompany.getName().startsWith("A"))
+                        .flatMap(airlineCompany -> airlineCompany.getFlights().stream())
+                        .filter(flight -> flight.getDepartureTime().isAfter(LocalTime.of(15, 00)));
+        airports.stream()
+                        .flatMap(airport -> airport.getFlight().stream())
+                                .flatMap(flight -> flight.getPassengers().stream());
+
 
         flight1.bookFlight();
         flight3.bookFlight();
@@ -623,5 +650,61 @@ public class Main {
         flight3.calculatePrice();
         flight7.calculatePrice();
         flight4.calculatePrice();
+
+
+        passengers1.stream()
+                .filter(passenger -> passenger.getPassportNumber().startsWith("MC"))
+                .filter(passenger -> passenger.getName().contains("A"))
+                .peek(passenger -> passenger.useDiscount(flight1))
+                .anyMatch(passenger -> passenger.equals(new Member(2)));
+
+         Buyable buyATicket = () -> {
+            Double finalPrice = Flight.calculatePrice();
+            Double discountedPrice = p1.useDiscount(flight1);
+            if(discountedPrice < finalPrice) {
+                return discountedPrice;
+            }
+            return discountedPrice;
+         };
+
+         booking1.buy(buyATicket);
+
+         Optional<String> comparison = booking1.compareValue(flight1);
+         comparison.filter(value -> (Flight.calculatePrice()-Flight.getPrice()) > 0);
+         if(comparison.isPresent()){
+            comparison.get();
+         }else if(!comparison.isPresent()){
+             comparison.orElse("0 values to compare");
+         }else{
+             comparison.orElseThrow(ArithmeticException::new);
+         }
+
+        try {
+            Class<?> myPassenger = Class.forName("Flight");
+            Constructor<?> c = myPassenger.getConstructor(String.class);
+            Object p22 = c.newInstance(new Object[] { 4 });
+            Method method = myPassenger.getMethod("getName");
+            LOGGER.debug(method.getName());
+            int modifiers = method.getModifiers();
+            LOGGER.debug(Modifier.isPublic(modifiers));
+            LOGGER.debug(method.getReturnType());
+            Method useDiscount = myPassenger.getMethod("useDiscount", int.class);
+            LOGGER.debug("Before: " + p1.useDiscount(flight1));
+            useDiscount.invoke(p1, flight4);
+            LOGGER.debug("Before: " + p1.useDiscount(flight1));
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }

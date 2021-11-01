@@ -6,5 +6,5 @@ public interface Bookable {
 
     void bookSeat(Integer flightNum);
 
-    Double calculatePrice();
+    static Double calculatePrice();
 }

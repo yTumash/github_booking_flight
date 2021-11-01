@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Flight<Passenger> implements Flyable, Transferable, Bookable {
 
@@ -17,7 +18,7 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
     private LocalTime departureTime;
     private LocalTime arrivalTime;
     private Integer flightCapacity;
-    private Double price;
+    private static Double price;
     private Integer seatsLeft;
     private CarryOn carryOn;
     private Luggage luggage;
@@ -80,7 +81,7 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
         this.flightCapacity = flightCapacity;
     }
 
-    public Double getPrice() {
+    public static Double getPrice() {
         return price;
     }
 
@@ -101,12 +102,10 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
     }
 
     public void setSeatsLeft(List<Aircraft<Seat>> planes, Integer seatsLeft) {
-        for (Aircraft<Seat> a : planes) {
-            if (seatsLeft <= a.getCapacity()) {
-                int numLeft = a.getCapacity() - seatsLeft;
-                LOGGER.debug(numLeft);
-            }
-        }
+        List<String> flightToBook = planes.stream()
+                .filter(aircraft -> aircraft.getCapacity() < seatsLeft)
+                .map(aircraft -> aircraft.getId())
+                .collect(Collectors.toList());
     }
 
     public String getCarryOn() {
@@ -174,17 +173,12 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
     }
 
     public void bookSeat(Integer flightNum) {
-        for (Flight<Passenger> x : flights) {
-            Integer seat = x.getSeatsLeft();
-            if (x.getFlightNumber().equals(flightNum)) {
-                seat--;
-            } else {
-                LOGGER.debug("Please, check your flight number");
-            }
-        }
+        flights.stream()
+                .filter(flight -> flight.getFlightNumber().equals(flightNum))
+                .map(flight -> flight.getSeatsLeft() -1);
     }
 
-    public Double calculatePrice() {
+    public static Double calculatePrice() {
         Double price = getPrice();
         if (com.solvd.flightbooking.Passenger.getAge() < 2) {
             price = 0.0d;
@@ -206,11 +200,6 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
                 "Initial price: " + getPrice() + "\n" +
                 "Baggage allowance: " + getLuggage() + "\n" +
                 "Carry-On allowance: " + getCarryOn();
-    }
-
-    public void printData() {
-        String a = toString();
-        LOGGER.debug(a);
     }
 
     @Override

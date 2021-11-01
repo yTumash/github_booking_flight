@@ -1,6 +1,7 @@
 package com.solvd.flightbooking;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class BookingServiceImpl implements BookingService {
 
@@ -19,6 +20,18 @@ public class BookingServiceImpl implements BookingService {
         bookable.bookFlight();
         bookable.bookSeat(flightNum);
         bookable.calculatePrice();
+    }
+
+    public void buy(Buyable buyATicket){
+       buyATicket.buy();
+    }
+
+    public Optional<String> compareValue(Flight<Passenger> flight){
+        String result = null;
+        if(flight.getPrice() > flight.calculatePrice()){
+            result = "There is an agreeable discount";
+        }
+        return Optional.ofNullable(result);
     }
 
     @Override

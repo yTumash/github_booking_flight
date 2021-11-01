@@ -55,6 +55,7 @@ public class Ticket {
         this.price = flight.calculatePrice();
     }
 
+
     @Override
     public String toString() {
         return "Passenger's name: " + passenger.getName() + "\n" +

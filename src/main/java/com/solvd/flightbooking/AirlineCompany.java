@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AirlineCompany<Flight> {
 
@@ -50,21 +51,16 @@ public class AirlineCompany<Flight> {
     }
 
     public void displayItineraries(List<Itinerary> itineraries) {
-        for (Itinerary i : itineraries) {
-            i.printData();
-        }
-    }
-
-    public void printData(Flight flight) {
-        String b = flight.toString();
-        LOGGER.debug(b);
+        List<String> destinationList = itineraries.stream()
+                    .filter(itinerary -> itinerary.getOrig() == "Minsk")
+                    .map(itinerary -> itinerary.getDest())
+                    .collect(Collectors.toList());
     }
 
     public void displayFlights(List<Flight> flights) {
-        for (Flight x : flights) {
-            String a = x.toString();
-            LOGGER.debug(a);
-        }
+        flights.stream()
+                .filter(flight -> Itinerary.getOrig() == "Minsk")
+                .map(flight -> flight.toString());
     }
 
     public void provideService() {
