@@ -536,6 +536,8 @@ public class Main {
                     flight6.setPrice(2300.0d);
                     flight7.setPrice(2550.0d);
                     break;
+                default:
+                    break;
             }
         } catch (InvalidPriceException e) {
             LOGGER.debug("The price has to be positive");

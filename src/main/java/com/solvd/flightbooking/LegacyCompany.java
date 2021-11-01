@@ -71,6 +71,8 @@ public class LegacyCompany extends AirlineCompany<Flight<Passenger>> implements 
                         case VEGETARIAN:
                             LOGGER.debug("You are to be served vegetarian meals.");
                             break;
+                        default:
+                            break;
                     }
                 }
             }

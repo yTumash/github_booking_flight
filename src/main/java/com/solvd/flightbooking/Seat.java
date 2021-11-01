@@ -2,7 +2,7 @@ package com.solvd.flightbooking;
 
 public class Seat {
 
-    public static Type type;
+    public  Type type;
     private String model;
     private Integer height;
     private Integer width;
