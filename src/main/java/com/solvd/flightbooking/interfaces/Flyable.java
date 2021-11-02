@@ -1,4 +1,6 @@
-package com.solvd.flightbooking;
+package com.solvd.flightbooking.interfaces;
+
+import com.solvd.flightbooking.Airport;
 
 public interface Flyable {
 

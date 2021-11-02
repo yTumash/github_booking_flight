@@ -1,5 +1,9 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.interfaces.Bookable;
+import com.solvd.flightbooking.interfaces.BookingService;
+import com.solvd.flightbooking.interfaces.Buyable;
+
 import java.util.Objects;
 import java.util.Optional;
 

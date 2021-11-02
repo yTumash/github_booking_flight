@@ -1,5 +1,11 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.exceptions.InvalidBaggageWeightException;
+import com.solvd.flightbooking.exceptions.InvalidCarryOnWeightException;
+import com.solvd.flightbooking.exceptions.InvalidPriceException;
+import com.solvd.flightbooking.interfaces.Bookable;
+import com.solvd.flightbooking.interfaces.Flyable;
+import com.solvd.flightbooking.interfaces.Transferable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -175,10 +181,11 @@ public class Flight<Passenger> implements Flyable, Transferable, Bookable {
     public void bookSeat(Integer flightNum) {
         flights.stream()
                 .filter(flight -> flight.getFlightNumber().equals(flightNum))
-                .map(flight -> flight.getSeatsLeft() -1);
+                .map(flight -> flight.getSeatsLeft() -1)
+                .count();
     }
 
-    public static Double calculatePrice() {
+    public Double calculatePrice() {
         Double price = getPrice();
         if (com.solvd.flightbooking.Passenger.getAge() < 2) {
             price = 0.0d;

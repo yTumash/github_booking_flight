@@ -1,4 +1,4 @@
-package com.solvd.flightbooking;
+package com.solvd.flightbooking.interfaces;
 
 public interface Bookable {
 
@@ -6,5 +6,5 @@ public interface Bookable {
 
     void bookSeat(Integer flightNum);
 
-    static Double calculatePrice();
+    Double calculatePrice();
 }

@@ -24,7 +24,7 @@ public class NonMember extends Passenger {
     }
 
     public Double useDiscount(Flight<Passenger> flight) {
-        Double price = flight.getPrice();
+        Double price = Flight.getPrice();
         if (getMembershipLength() > 1 && getMembershipLength() < 2) {
             price = price * 0.1d;
             LOGGER.debug("You get a 10% discount.");

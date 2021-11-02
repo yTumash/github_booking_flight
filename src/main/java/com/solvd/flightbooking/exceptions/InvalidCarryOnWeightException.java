@@ -1,4 +1,4 @@
-package com.solvd.flightbooking;
+package com.solvd.flightbooking.exceptions;
 
 public class InvalidCarryOnWeightException extends RuntimeException{
 

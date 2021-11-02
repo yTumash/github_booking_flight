@@ -51,16 +51,19 @@ public class AirlineCompany<Flight> {
     }
 
     public void displayItineraries(List<Itinerary> itineraries) {
-        List<String> destinationList = itineraries.stream()
-                    .filter(itinerary -> itinerary.getOrig() == "Minsk")
-                    .map(itinerary -> itinerary.getDest())
-                    .collect(Collectors.toList());
+        List<Itinerary> destinationList = itineraries.stream()
+                .filter(itinerary -> Itinerary.getOrig() == "Minsk")
+                .filter(itinerary -> Itinerary.getDest() != null)
+                .collect(Collectors.toList());
+        destinationList.forEach(itinerary -> LOGGER.debug(Itinerary.getDest()));
     }
 
     public void displayFlights(List<Flight> flights) {
-        flights.stream()
+        List<Flight> flightsListed = flights.stream()
                 .filter(flight -> Itinerary.getOrig() == "Minsk")
-                .map(flight -> flight.toString());
+                .filter(flight -> Itinerary.getOrig() != null)
+                .collect(Collectors.toList());
+        LOGGER.debug(flightsListed);
     }
 
     public void provideService() {

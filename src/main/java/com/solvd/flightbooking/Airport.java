@@ -1,10 +1,14 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.exceptions.InvalidNameException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Airport<AirlineCompany> {
 
@@ -51,12 +55,12 @@ public class Airport<AirlineCompany> {
         this.flights = flights;
     }
 
-    public void setAirlines(List<AirlineCompany> airlines) {
-        this.airlines = airlines;
-    }
-
     public List<AirlineCompany> getAirlines() {
         return airlines;
+    }
+
+    public void setAirlines(List<AirlineCompany> airlines) {
+        this.airlines = airlines;
     }
 
     public void receivePlane(Flight<Passenger> flight) {

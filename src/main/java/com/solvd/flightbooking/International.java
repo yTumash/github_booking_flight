@@ -1,5 +1,7 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.interfaces.Flyable;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 

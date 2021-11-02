@@ -1,5 +1,6 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.interfaces.Serviceable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

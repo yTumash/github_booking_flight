@@ -1,5 +1,7 @@
 package com.solvd.flightbooking;
 
+import com.solvd.flightbooking.exceptions.InvalidAgeException;
+import com.solvd.flightbooking.exceptions.InvalidHumanNameException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,7 +34,7 @@ public abstract class Passenger {
         char c;
         for (int i = 0; i < name.length(); i++) {
             c = name.charAt(i);
-            if (Character.isDigit(c)){
+            if (Character.isDigit(c)) {
                 throw new InvalidHumanNameException("The name must only contain letters");
             }
             this.name = name;
