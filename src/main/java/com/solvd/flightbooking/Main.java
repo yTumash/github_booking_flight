@@ -29,7 +29,7 @@ public class Main {
         airlines.add(airline2);
         airlines.add(airline3);
 
-        List<AirlineCompany> findAirline = airlines.stream()
+        List<AirlineCompany<Flight<Passenger>>> findAirline = airlines.stream()
                 .filter(airline -> airline.getDob().isAfter(LocalDate.of(1990, 1, 1)))
                 .peek(airline -> airline.getName().startsWith("B"))
                 .collect(Collectors.toList());
@@ -134,7 +134,7 @@ public class Main {
         aircrafts.add(aircraft3);
         aircrafts.add(aircraft4);
 
-        List<Aircraft> seatClass = aircrafts.stream()
+        List<Aircraft<Seat>> seatClass = aircrafts.stream()
                 .filter(aircraft -> aircraft.getModel().equals(Aircraft.Model.AIRBUS))
                 .filter(aircraft -> aircraft.getCapacity() > 600)
                 .peek(aircraft -> aircraft.getSeats().equals(Seat.Type.ECONOMY))
